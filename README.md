@@ -25,3 +25,8 @@ The word guesser can also guess the whole word at any time.
 3. Winning and Losing:
     The word guesser wins if they correctly guess all the letters before the hanged man is completed.
     The word guesser loses if the hanged man is completed before they guess all the letters.
+
+
+there are 2 files in this repo
+hangman.py for running the game
+and a word.txt with the list of words
