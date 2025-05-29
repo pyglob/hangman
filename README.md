@@ -1,6 +1,6 @@
-# hangman
+# Hangman
 
-      simple hangman game in python
+      simple Hangman game in python
 
                   _    _ 
                  | |  | | 
