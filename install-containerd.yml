@@ -18,8 +18,8 @@
 
     - name: Install containerd
       dnf:
-        name: containerd.io
-        state: latest
+        name: containerd.io-1.6.20-3.1.el8
+        state: present
 
     - name: Enable and start containerd
       systemd:
