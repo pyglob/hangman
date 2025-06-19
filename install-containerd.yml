@@ -1,0 +1,28 @@
+---
+- name: Install containerd on CentOS 8
+  hosts: ansible_targets
+  become: true
+  tasks:
+    - name: Install required packages
+      dnf:
+        name:
+          - yum-utils
+          - device-mapper-persistent-data
+          - lvm2
+        state: present
+
+    - name: Add Docker repository
+      get_url:
+        url: https://download.docker.com/linux/centos/docker-ce.repo
+        dest: /etc/yum.repos.d/docker-ce.repo
+
+    - name: Install containerd
+      dnf:
+        name: containerd.io
+        state: latest
+
+    - name: Enable and start containerd
+      systemd:
+        name: containerd
+        enabled: yes
+        state: started
