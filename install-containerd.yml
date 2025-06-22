@@ -3,6 +3,29 @@
   hosts: ansible_targets
   become: true
   tasks:
+    - name: Remove conflicting container packages
+    ansible.builtin.dnf:
+      name:
+        - podman
+        - runc
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+      state: absent
+    ignore_errors: true
+
+    - name: Reset container-tools module
+      ansible.builtin.shell: dnf -y module reset container-tools
+
+    - name: Enable container-tools module (version 4.0)
+      ansible.builtin.shell: dnf -y module enable container-tools:4.0
+
+    - name: Clean DNF metadata
+    ansible.builtin.shell: dnf clean all
+
+    - name: Make DNF cache
+      ansible.builtin.shell: dnf makecache      
+  
     - name: Reset problematic Perl modules (fixes modularity conflicts)
       ansible.builtin.shell: |
         dnf module reset perl-IO-Socket-SSL perl-libwww-perl perl-DBI perl-DBD-MySQL perl-DBD-SQLite -y
