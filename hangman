@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Find the most recently built 'anewpipe' image (by tag or latest)
+IMAGE=$(docker images --format '{{.Repository}}:{{.Tag}} {{.CreatedAt}}' | \
+        grep '^anewpipe:' | sort -rk2 | head -n1 | awk '{print $1}')
+
+if [ -z "$IMAGE" ]; then
+    echo "No anewpipe image found."
+    exit 1
+fi
+
+# Run the game in a new, temporary container
+docker run --rm -it "$IMAGE" hangman
