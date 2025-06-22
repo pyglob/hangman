@@ -4,16 +4,16 @@
   become: true
   tasks:
     - name: Remove conflicting container packages
-    ansible.builtin.dnf:
-      name:
-        - podman
-        - runc
-        - docker-ce
-        - docker-ce-cli
-        - containerd
-        - containerd.io
-      state: absent
-    ignore_errors: true
+      ansible.builtin.dnf:
+        name:
+          - podman
+          - runc
+          - docker-ce
+          - docker-ce-cli
+          - containerd
+          - containerd.io
+        state: absent
+      ignore_errors: true
 
     - name: Reset container-tools module
       ansible.builtin.shell: dnf -y module reset container-tools
@@ -22,18 +22,17 @@
       ansible.builtin.shell: dnf -y module enable container-tools:4.0
 
     - name: Clean DNF metadata
-    ansible.builtin.shell: dnf clean all
+      ansible.builtin.shell: dnf clean all
 
     - name: Make DNF cache
-      ansible.builtin.shell: dnf makecache      
-  
+      ansible.builtin.shell: dnf makecache
+
     - name: Reset problematic Perl modules (fixes modularity conflicts)
       ansible.builtin.shell: |
         dnf module reset perl-IO-Socket-SSL perl-libwww-perl perl-DBI perl-DBD-MySQL perl-DBD-SQLite -y
-      args:
-        
+
     - name: Install required packages
-      dnf:
+      ansible.builtin.dnf:
         name:
           - yum-utils
           - device-mapper-persistent-data
@@ -41,17 +40,17 @@
         state: present
 
     - name: Add Docker repository
-      get_url:
+      ansible.builtin.get_url:
         url: https://download.docker.com/linux/centos/docker-ce.repo
         dest: /etc/yum.repos.d/docker-ce.repo
 
     - name: Install containerd
-      dnf:
+      ansible.builtin.dnf:
         name: containerd.io-1.6.20-3.1.el8
         state: present
 
     - name: Enable and start containerd
-      systemd:
+      ansible.builtin.systemd:
         name: containerd
         enabled: yes
         state: started
