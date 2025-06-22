@@ -23,9 +23,7 @@ WORKDIR /app
 # Copy all required files into the image
 COPY hangman.py words.txt /app/
 
-RUN chmod +x /app/hangman
-
-RUN ln -s /app/hangman.py /app/hangman
+RUN chmod +x /app/hangman.py && ln -s /app/hangman.py /app/hangman
 
 ENV PATH="/app:${PATH}"
 
