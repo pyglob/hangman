@@ -1,3 +1,4 @@
+#!/app/venv/bin/python
 import random
 import os
 
