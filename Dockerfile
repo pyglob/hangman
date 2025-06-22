@@ -34,5 +34,3 @@ EXPOSE 22 80
 
 # Default command to run the app
 CMD ["/app/venv/bin/python", "hangman.py"]
-
-# CMD service ssh start && apachectl -D FOREGROUND
