@@ -54,3 +54,17 @@
         name: containerd
         enabled: yes
         state: started
+
+    - name: Install Docker Engine
+      ansible.builtin.dnf:
+        name:
+         - docker-ce
+         - docker-ce-cli
+         - containerd.io
+        state: present
+ 
+    - name: Enable and start Docker
+      ansible.builtin.systemd:
+        name: docker
+        enabled: yes
+        state: started
