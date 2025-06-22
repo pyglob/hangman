@@ -10,6 +10,7 @@
         - runc
         - docker-ce
         - docker-ce-cli
+        - containerd
         - containerd.io
       state: absent
     ignore_errors: true
