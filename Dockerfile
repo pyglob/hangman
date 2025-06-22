@@ -9,19 +9,25 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Update package list and install dependencies
 RUN apt-get update && \
     apt-get install -y python3.10 python3.10-venv python3.10-dev && \
-    apt-get install -y openssh-server apache2 && \
+    #apt-get install -y openssh-server apache2 && \
     apt-get clean
 
 # Configure SSH server
-RUN mkdir /var/run/sshd
-RUN echo 'root:password' | chpasswd
-RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+#RUN mkdir /var/run/sshd
+#RUN echo 'root:password' | chpasswd
+#RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
 # Set up working directory for the application
 WORKDIR /app
 
 # Copy all required files into the image
 COPY hangman.py words.txt /app/
+
+RUN chmod +x /app/hangman
+
+RUN ln -s /app/hangman.py /app/hangman
+
+ENV PATH="/app:${PATH}"
 
 # Create a virtual environment inside the project directory
 RUN python3.10 -m venv /app/venv
@@ -32,5 +38,5 @@ RUN /app/venv/bin/pip install --upgrade pip
 # Expose ports for SSH (22) and HTTP (80)
 EXPOSE 22 80
 
-# Default command to run the app
-CMD ["/app/venv/bin/python", "hangman.py"]
+# Optionally, run hangman by default
+ENTRYPOINT ["hangman"]
