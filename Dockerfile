@@ -20,23 +20,19 @@ RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/
 # Set up working directory for the application
 WORKDIR /app
 
-
-# Clone the repository from GitHub
-ARG GIT_REPO_URL
-RUN git clone ${GIT_REPO_URL} /app/project
-
+# Copy all required files into the image
+COPY hangman.py words.txt /app/
 
 # Create a virtual environment inside the project directory
-RUN python3.10 -m venv /app/project/venv
-
+RUN python3.10 -m venv /app/venv
 
 # Install dependencies (if the repository has a requirements.txt)
-RUN /app/project/venv/bin/pip install --upgrade pip && \
-    test -f /app/project/requirements.txt && /app/project/venv/bin/pip install -r /app/project/requirements.txt || echo "No requirements.txt found"
-
+RUN /app/venv/bin/pip install --upgrade pip
 
 # Expose ports for SSH (22) and HTTP (80)
 EXPOSE 22 80
 
-# Start both services
-CMD service ssh start && apachectl -D FOREGROUND
+# Default command to run the app
+CMD ["/app/venv/bin/python", "hangman.py"]
+
+# CMD service ssh start && apachectl -D FOREGROUND
