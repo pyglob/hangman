@@ -7,7 +7,6 @@
       ansible.builtin.shell: |
         dnf module reset perl-IO-Socket-SSL perl-libwww-perl perl-DBI perl-DBD-MySQL perl-DBD-SQLite -y
       args:
-        warn: false
         
     - name: Install required packages
       dnf:
