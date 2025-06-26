@@ -36,7 +36,7 @@ and a word.txt with the list of words
 
 
 
-Hangman Automation Demo App
+Hangman game in Python using Jenkins automation
 
 Welcome to the Hangman Automation Demo App—a simple, containerized Python game showcasing CI/CD automation with Jenkins,
 Ansible, and Docker.
