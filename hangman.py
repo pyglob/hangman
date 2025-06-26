@@ -213,11 +213,23 @@ def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     default_filepath = os.path.join(script_dir, "words.txt")
 
-    filepath = input(f"Enter file path [{default_filepath}]: ").strip()
-    if not filepath:
-        filepath = default_filepath
+    # Check if running in an interactive terminal
+    if sys.stdin.isatty():
+        filepath = input(f"Enter file path [{default_filepath}]: ").strip()
+        if not filepath:
+            filepath = default_filepath
 
-    index = input("Enter index: ")
+        index = input("Enter index: ")
+    else:
+        # Non-interactive: use defaults or environment variables
+        filepath = default_filepath
+        index = "12"  # or set a sensible default, or use an environment variable
+    
+    #filepath = input(f"Enter file path [{default_filepath}]: ").strip()
+    #if not filepath:
+    #    filepath = default_filepath
+
+    #index = input("Enter index: ")
     s_word = choose_word(filepath, int(index))
     print("\nLet's start\n")
     print(print_hangman(num_of_tries))
