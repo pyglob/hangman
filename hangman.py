@@ -1,7 +1,7 @@
 #!/app/venv/bin/python
 import random
 import os
-
+import sys
 
 def clear_screen():
     """This function clear the screen in windows os environment"""
