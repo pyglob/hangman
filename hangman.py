@@ -239,7 +239,11 @@ def main():
     print(show_hidden_word(secret_word, old_letters_guessed))
 
     while num_of_tries < MAX_TRIES:
-        guess_letter = input("Guess a letter: ")
+        try:
+            guess_letter = input("Guess a letter: ")
+        except EOFError:
+        print("\nNo input received. Exiting the game gracefully.")
+        break  # or use exit(0) if you want to quit the program immediately
 
         valid_guess = try_update_letter_guessed(guess_letter, old_letters_guessed)
 
