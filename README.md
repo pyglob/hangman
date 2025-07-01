@@ -155,6 +155,7 @@ Example Game Session
 
 
 Maintenance
+
     Jenkins will always update the anewpipe:latest image after each build, ensuring you play the newest version every time.
     No containers are left running after the game ends
 	
